@@ -4,18 +4,19 @@ import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   controllers: [PropertyController],
-  providers: [
-    {
-      provide: APP_PIPE,
-      useValue: new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: true,
-        transformOptions: {
-          enableImplicitConversion: true,
-        },
-      }),
-    },
-  ],
+  //----global validation pipes
+  // providers: [
+  //   {
+  //     provide: APP_PIPE,
+  //     useValue: new ValidationPipe({
+  //       whitelist: true,
+  //       forbidNonWhitelisted: true,
+  //       transform: true,
+  //       transformOptions: {
+  //         enableImplicitConversion: true,
+  //       },
+  //     }),
+  //   },
+  // ],
 })
 export class PropertyModule {}

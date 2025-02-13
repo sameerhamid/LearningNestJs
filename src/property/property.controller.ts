@@ -6,6 +6,7 @@ import {
   Param,
   ParseBoolPipe,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
   UsePipes,
@@ -37,9 +38,35 @@ export class PropertyController {
   @HttpCode(201)
   // @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
   create(
-    @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    @Body(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        groups: ['create'],
+        always: true,
+      }),
+    )
     property: CreatePropertyDto,
   ) {
     return { ...property };
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        groups: ['update'],
+        always: true,
+      }),
+    )
+    property: CreatePropertyDto,
+  ) {
+    return {
+      ...property,
+      id,
+    };
   }
 }

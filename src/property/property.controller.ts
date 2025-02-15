@@ -21,6 +21,8 @@ import {
   CreatePropertyDtoZod,
   createPropertySchema,
 } from './dot/createPropertyZod.dto';
+import { HeadersDto } from './dot/headers.dto';
+import { RequestHeader } from './pipes/request-headers';
 
 @Controller('property')
 export class PropertyController {
@@ -58,7 +60,13 @@ export class PropertyController {
     @Param('id', ParseIdPipe) id: number,
     @Body()
     property: CreatePropertyDto,
-    @Headers('host') header,
+    @RequestHeader(
+      new ValidationPipe({
+        whitelist: true,
+        validateCustomDecorators: true,
+      }),
+    )
+    header: HeadersDto,
   ) {
     // return {
     //   ...property,

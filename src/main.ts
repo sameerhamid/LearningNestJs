@@ -10,6 +10,7 @@ async function bootstrap() {
   //     forbidNonWhitelisted: true,
   //   }),
   // );
+  // console.log(__dirname);
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

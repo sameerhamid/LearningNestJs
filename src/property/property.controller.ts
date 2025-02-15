@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Headers,
   HttpCode,
   Param,
   ParseBoolPipe,
@@ -57,10 +58,13 @@ export class PropertyController {
     @Param('id', ParseIdPipe) id: number,
     @Body()
     property: CreatePropertyDto,
+    @Headers('host') header,
   ) {
-    return {
-      ...property,
-      id,
-    };
+    // return {
+    //   ...property,
+    //   id,
+    // };
+
+    return header;
   }
 }

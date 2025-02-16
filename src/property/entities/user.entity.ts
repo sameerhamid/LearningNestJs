@@ -53,7 +53,7 @@ export class User {
 
   @ManyToMany(() => Property, (property) => property.likedBy)
   @JoinTable({
-    name: 'user_ liked_properties',
+    name: 'user_liked_properties',
   })
   likedProperties: Property[];
 }

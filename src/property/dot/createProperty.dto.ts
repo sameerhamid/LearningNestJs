@@ -13,6 +13,6 @@ export class CreatePropertyDto {
   description: string;
 
   // @IsOptional({ groups: ['update'] })
-  @IsInt()
-  price: number;
+  @IsString()
+  price: string;
 }

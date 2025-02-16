@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Headers,
   HttpCode,
@@ -24,6 +25,7 @@ import {
 import { HeadersDto } from './dot/headers.dto';
 import { RequestHeader } from './pipes/request-headers';
 import { PropertyService } from './property.service';
+import { UpdatePropertyDto } from './dot/updateProperty.dto';
 
 @Controller('property')
 export class PropertyController {
@@ -42,7 +44,7 @@ export class PropertyController {
   @Get(':id')
   findOne(
     @Param('id', ParseIntPipe) id: number,
-    @Query('sort', ParseBoolPipe) sort: boolean,
+    // @Query('sort', ParseBoolPipe) sort: boolean,
   ) {
     // console.log('sort', typeof sort);
     // console.log('id', typeof id);
@@ -51,7 +53,7 @@ export class PropertyController {
     //   sort,
     // };
 
-    this.propertyService.findOne();
+    return this.propertyService.findOne(id);
   }
 
   @Post()
@@ -62,22 +64,21 @@ export class PropertyController {
     @Body()
     property: CreatePropertyDtoZod,
   ) {
-    // return { ...property };
-    return this.propertyService.create();
+    return this.propertyService.create(property);
   }
 
   @Patch(':id')
   update(
     @Param('id', ParseIdPipe) id: number,
     @Body()
-    property: CreatePropertyDto,
-    @RequestHeader(
-      new ValidationPipe({
-        whitelist: true,
-        validateCustomDecorators: true,
-      }),
-    )
-    header: HeadersDto,
+    property: UpdatePropertyDto,
+    // @RequestHeader(
+    //   new ValidationPipe({
+    //     whitelist: true,
+    //     validateCustomDecorators: true,
+    //   }),
+    // )
+    // header: HeadersDto,
   ) {
     // return {
     //   ...property,
@@ -85,6 +86,11 @@ export class PropertyController {
     // };
 
     // return header;
-    this.propertyService.update();
+    return this.propertyService.update(id, property);
+  }
+
+  @Delete(':id')
+  delete(@Param('id', ParseIdPipe) id: number) {
+    return this.propertyService.delete(id);
   }
 }

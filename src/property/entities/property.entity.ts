@@ -19,11 +19,6 @@ export class Property {
 
   @Column({
     type: 'int',
-  })
-  area: number;
-
-  @Column({
-    type: 'int',
     default: 0,
   })
   price: number;

@@ -12,5 +12,6 @@ async function bootstrap() {
   // );
   // console.log(__dirname);
   await app.listen(process.env.PORT ?? 3000);
+  console.log(process.env.DB_NAME);
 }
 bootstrap();

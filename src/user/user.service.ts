@@ -22,7 +22,10 @@ export class UserService {
   }
 
   async findOne(id: number) {
-    return await this.UserRepo.findOneBy({ id });
+    return await this.UserRepo.findOne({
+      where: { id },
+      select: ['firstName', 'lastName', 'email', 'avatarUrl'],
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

@@ -45,6 +45,11 @@ export class User {
   })
   avatarUrl: string;
 
+  @Column({
+    nullable: true,
+  })
+  hashedRefreshToken: string;
+
   @CreateDateColumn({
     type: 'timestamp',
   })

@@ -15,6 +15,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 import { Role } from 'src/auth/enums/role.enum';
+import { Roles } from 'src/auth/decrators/roles.decrator';
 
 @Controller('user')
 export class UserController {
@@ -36,7 +37,7 @@ export class UserController {
     return this.userService.update(+id, updateUserDto);
   }
 
-  @SetMetadata('role', [Role.ADMIN])
+  @Roles(Role.ADMIN, Role.EDITOR)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);

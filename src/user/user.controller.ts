@@ -17,6 +17,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 import { Role } from 'src/auth/enums/role.enum';
 import { Roles } from 'src/auth/decrators/roles.decrator';
 
+@Roles(Role.USER)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

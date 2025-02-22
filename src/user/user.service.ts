@@ -29,6 +29,7 @@ export class UserService {
     return await this.UserRepo.findOne({
       where: { id },
       select: [
+        'id',
         'firstName',
         'lastName',
         'email',
@@ -44,6 +45,6 @@ export class UserService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.UserRepo.delete({ id });
   }
 }

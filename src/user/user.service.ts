@@ -34,6 +34,7 @@ export class UserService {
         'email',
         'avatarUrl',
         'hashedRefreshToken',
+        'role',
       ],
     });
   }

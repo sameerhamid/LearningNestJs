@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { Property } from './property.entity';
 import * as bcrypt from 'bcrypt';
+import { Role } from 'src/auth/enums/role.enum';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -38,6 +39,13 @@ export class User {
     length: 100,
   })
   password: string;
+
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.USER,
+  })
+  role: Role;
 
   @Column({
     type: 'text',

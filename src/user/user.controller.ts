@@ -17,12 +17,14 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
 import { Role } from 'src/auth/enums/role.enum';
 import { Roles } from 'src/auth/decrators/roles.decrator';
 import { RolesGuard } from 'src/auth/guards/roles/roles.guard';
+import { Public } from 'src/auth/decrators/public.decrator';
 
-@Roles(Role.USER)
+// @Roles(Role.USER)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Public()
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
@@ -41,8 +43,8 @@ export class UserController {
 
   // @SetMetadata('roles', [Role.ADMIN, Role.EDITOR])
   @Roles(Role.ADMIN)
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(RolesGuard)
+  // @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);

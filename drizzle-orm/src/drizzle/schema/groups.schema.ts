@@ -1,4 +1,5 @@
 import {
+  index,
   integer,
   pgTable,
   primaryKey,
@@ -27,5 +28,6 @@ export const UsersToGroups = pgTable(
   (table) => ({
     //   composit primaryKey
     pk: primaryKey({ columns: [table.userId, table.groupId] }),
+    userIdIndex: index('userIdIndex').on(table.userId),
   }),
 );

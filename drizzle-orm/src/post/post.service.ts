@@ -13,11 +13,14 @@ export class PostService {
   }
 
   async findAll() {
-    return await this.db.select().from(Posts);
+    // return await this.db.select().from(Posts);
+    return await this.db.query.Posts.findMany({
+      with: { author: true },
+    });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} post`;
+    // return await this.db.select().from(Posts).where(eq(Posts.id, id));
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {

@@ -15,6 +15,7 @@ export class PostService {
   async findAll() {
     // return await this.db.select().from(Posts);
     return await this.db.query.Posts.findMany({
+      where: (Posts, { eq }) => eq(Posts.id, 1),
       with: {
         author: {
           with: {

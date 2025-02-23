@@ -15,7 +15,17 @@ export class PostService {
   async findAll() {
     // return await this.db.select().from(Posts);
     return await this.db.query.Posts.findMany({
-      with: { author: true },
+      with: {
+        author: {
+          with: {
+            userToGroups: {
+              with: {
+                group: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 

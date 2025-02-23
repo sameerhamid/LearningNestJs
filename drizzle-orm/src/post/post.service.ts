@@ -4,6 +4,8 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { DRIZZLE } from 'src/drizzle/drizzle.module';
 import { DrizzleDb } from 'src/drizzle/types/drizzle';
 import { Posts } from 'src/drizzle/schema/posts.schema';
+import { eq } from 'drizzle-orm';
+import { Comments } from 'src/drizzle/schema/comments.schema';
 
 @Injectable()
 export class PostService {
@@ -34,11 +36,16 @@ export class PostService {
     // return await this.db.select().from(Posts).where(eq(Posts.id, id));
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    return await this.db
+      .update(Posts)
+      .set(updatePostDto)
+      .where(eq(Posts.id, id));
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number) {
+    // Delete all comments related to the post
+    await this.db.delete(Comments).where(eq(Comments.postId, id));
+    return await this.db.delete(Posts).where(eq(Posts.id, id));
   }
 }

@@ -15,6 +15,13 @@
       "when": 1740289353285,
       "tag": "0001_eager_freak",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1740290342813,
+      "tag": "0002_black_human_robot",
+      "breakpoints": true
     }
   ]
 }

@@ -8,7 +8,7 @@ export class UserService {
   constructor(private readonly pirsma: PrismaService) {}
 
   async findByEmail(email: string) {
-    this.pirsma.users.findUnique({ where: { email } });
+    return this.pirsma.users.findUnique({ where: { email } });
   }
   async create(createUserDto: CreateUserDto) {
     const { password, ...user } = createUserDto;

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import SignupForm from "./signupForm";
 
 const SignUpPage = () => {
   return (
@@ -7,6 +8,7 @@ const SignUpPage = () => {
       <h1 className="text-center text-2xl font-bold mb-4">Sign Up Page</h1>
 
       {/* signup form */}
+      <SignupForm />
 
       {/* already account */}
       <div className="flex justify-center text-sm">

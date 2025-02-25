@@ -11,7 +11,7 @@ const SignupForm = () => {
   const [state, action] = useFormState(signUp, undefined);
   return (
     <form action={action}>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-64">
         {state?.message && (
           <p className="text-sm text-red-500">{state.message}</p>
         )}

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { BACKEND_URL } from "./constants";
 import { FormState, LoginFormSchema, SignUpFormSchema } from "./type";
 import z from "zod";
+import { createSession } from "./session";
 
 interface SignInDataType {
   email: string;
@@ -77,8 +78,13 @@ export const signIn = async (
   if (res.ok) {
     const result = await res.json();
     console.log("Login api response>>>>", result);
-
     //create the session for authenticated user
+    await createSession({
+      user: {
+        id: result.id,
+        name: result.name,
+      },
+    });
     redirect("/");
   } else {
     return {

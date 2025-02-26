@@ -20,4 +20,8 @@ export class UserService {
       },
     });
   }
+
+  async findOne(userId: number) {
+    return this.pirsma.users.findUnique({ where: { id: userId } });
+  }
 }

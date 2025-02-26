@@ -84,6 +84,7 @@ export const signIn = async (
         id: result.id,
         name: result.name,
       },
+      accessToken: result.accessToken,
     });
     redirect("/");
   } else {

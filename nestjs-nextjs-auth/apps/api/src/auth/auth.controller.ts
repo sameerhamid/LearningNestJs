@@ -29,6 +29,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('protected')
   getAll() {
-    return 'now you can access the protected api';
+    return { message: 'now you can access the protected api' };
   }
 }

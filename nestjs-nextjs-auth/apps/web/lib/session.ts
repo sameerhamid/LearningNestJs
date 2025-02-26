@@ -16,17 +16,19 @@ export type Session = {
 
 const encodedKey = new TextEncoder().encode(SESSION_SECRET_KEY);
 const SESSION = "session";
+const ALGO = "HS256";
 
 export async function createSession(payload: Session) {
   const expiredAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
 
   // encrypt the payload using jose and set the expiration time to 7 days from now
   const session = await new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" })
+    .setProtectedHeader({ alg: ALGO })
     .setIssuedAt()
     .setExpirationTime("7d")
     .sign(encodedKey);
 
+  // set the session cookie with the encrypted payload
   (await cookies()).set(SESSION, session, {
     expires: expiredAt,
     httpOnly: true,
@@ -45,7 +47,7 @@ export async function getSession() {
   try {
     // verify the session using jose and return the payload
     const { payload } = await jwtVerify(cookie.value, encodedKey, {
-      algorithms: ["HS256"],
+      algorithms: [ALGO],
     });
 
     return payload as Session;

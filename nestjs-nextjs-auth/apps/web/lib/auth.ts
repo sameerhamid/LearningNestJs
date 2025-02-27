@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { BACKEND_URL } from "./constants";
 import { FormState, LoginFormSchema, SignUpFormSchema } from "./type";
 import z from "zod";
-import { createSession } from "./session";
+import { createSession, updateTokens } from "./session";
 
 interface SignInDataType {
   email: string;
@@ -94,5 +94,27 @@ export const signIn = async (
         res.status === 401 ? "Invalid email or password" : res.statusText,
       data,
     };
+  }
+};
+
+export const refreshToken = async (oldRefreshToken: string) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/auth/refresh`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${oldRefreshToken}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to refresh token");
+    }
+
+    const result = await response.json();
+    // update the session with new tokens
+    await updateTokens(result.accessToken!, result.refreshToken!);
+    return result.accessToken;
+  } catch (error) {
+    console.error("Error refreshing token:", error);
+    return null;
   }
 };

@@ -111,7 +111,17 @@ export const refreshToken = async (oldRefreshToken: string) => {
 
     const result = await response.json();
     // update the session with new tokens
-    await updateTokens(result.accessToken!, result.refreshToken!);
+    // await updateTokens(result.accessToken!, result.refreshToken!);
+    const updatedRes = await fetch("http://localhost:3000/api/auth/update", {
+      method: "POST",
+      body: JSON.stringify({
+        accessToken: result.accessToken,
+        refreshToken: result.refreshToken,
+      }),
+    });
+    if (!updatedRes.ok) {
+      throw new Error("Failed to update tokens");
+    }
     return result.accessToken;
   } catch (error) {
     console.error("Error refreshing token:", error);

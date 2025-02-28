@@ -54,4 +54,10 @@ export class AuthController {
       `http://localhost:3000/api/auth/google/callback?userId=${response.id}&accessToken=${response.accessToken}&refreshToken=${response.refreshToken}&name=${response.name}`,
     );
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('signout')
+  signOut(@Request() req) {
+    return this.authService.singOut(req.user.id);
+  }
 }

@@ -39,6 +39,7 @@ export async function createSession(payload: Session) {
 }
 
 export async function getSession() {
+  cookies();
   const cookie = (await cookies()).get(SESSION);
   if (!cookie) {
     return null;

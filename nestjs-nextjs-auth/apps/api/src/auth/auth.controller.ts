@@ -14,38 +14,43 @@ import { JwtAuthGuard } from './guards/jwt-auth/jwt-auth.guard';
 import { RefreshAuthGuard } from './guards/refresh-auth/refresh-auth.guard';
 import { GoogelAuthGuard } from './guards/googel-auth/googel-auth.guard';
 import { Response } from 'express';
+import { Public } from './decrators/public.decrator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('signup')
   regisetUser(@Body() createUserDto: CreateUserDto) {
     return this.authService.registerUser(createUserDto);
   }
 
+  @Public()
   @UseGuards(LocalAuthGuard)
   @Post('signin')
   loginUser(@Request() req) {
     return this.authService.login(req.user.id, req.user.name);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('protected')
   getAll() {
     return { message: 'now you can access the protected api' };
   }
 
+  @Public()
   @UseGuards(RefreshAuthGuard)
   @Post('refresh')
   refreshToken(@Request() req) {
     return this.authService.refreshToken(req.user.id, req.user.name);
   }
 
+  @Public()
   @UseGuards(GoogelAuthGuard)
   @Get('google/login')
   googleLogin() {}
 
+  @Public()
   @UseGuards(GoogelAuthGuard)
   @Get('google/callback')
   async googleCallback(@Request() req, @Res() res: Response) {
@@ -55,7 +60,6 @@ export class AuthController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('signout')
   signOut(@Request() req) {
     return this.authService.singOut(req.user.id);

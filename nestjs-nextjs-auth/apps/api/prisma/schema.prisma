@@ -44,6 +44,7 @@ model users {
   email              String          @unique
   password           String
   hashedRefreshToken String?
+  role Role @default(USER)
   comments           comments[]
   posts              posts[]
   profileInfo        profileInfo[]
@@ -58,4 +59,11 @@ model usersToGroups {
 
   @@id([userId, groupId], map: "usersToGroups_userId_groupId_pk")
   @@index([userId], map: "userIdIndex")
+}
+
+
+enum Role {
+  ADMIN
+  EDITOR
+  USER
 }

@@ -15,7 +15,9 @@ import { RefreshAuthGuard } from './guards/refresh-auth/refresh-auth.guard';
 import { GoogelAuthGuard } from './guards/googel-auth/googel-auth.guard';
 import { Response } from 'express';
 import { Public } from './decrators/public.decrator';
-
+import { Roles } from './decrators/roles.decrator';
+import { RolesGuard } from './guards/roles/roles.guard';
+import { Role } from '@prisma/client';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -30,12 +32,20 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('signin')
   loginUser(@Request() req) {
-    return this.authService.login(req.user.id, req.user.name);
+    console.log('calling>>>');
+    return this.authService.login(req.user.id, req.user.name, req.user.role);
   }
 
+  @Roles(Role.ADMIN, Role.EDITOR)
+  // @UseGuards(RolesGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('protected')
-  getAll() {
-    return { message: 'now you can access the protected api' };
+  getAll(@Request() req) {
+    return {
+      message:
+        'now you can access the protected api. this is your user ID' +
+        req.user.id,
+    };
   }
 
   @Public()
@@ -54,9 +64,13 @@ export class AuthController {
   @UseGuards(GoogelAuthGuard)
   @Get('google/callback')
   async googleCallback(@Request() req, @Res() res: Response) {
-    const response = await this.authService.login(req.user.id, req.user.name);
+    const response = await this.authService.login(
+      req.user.id,
+      req.user.name,
+      req.user.role,
+    );
     res.redirect(
-      `http://localhost:3000/api/auth/google/callback?userId=${response.id}&accessToken=${response.accessToken}&refreshToken=${response.refreshToken}&name=${response.name}`,
+      `http://localhost:3000/api/auth/google/callback?userId=${response.id}&accessToken=${response.accessToken}&refreshToken=${response.refreshToken}&name=${response.name}&role=${response.role}`,
     );
   }
 

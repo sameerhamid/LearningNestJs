@@ -32,9 +32,9 @@ export class User {
   @Field(() => Profile)
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   @JoinColumn()
-  profile: Profile;
+  profile: Promise<Profile>;
 
   @Field(() => [Post])
   @OneToMany(() => Post, (post) => post.user)
-  posts: Post[];
+  posts: Promise<Post[]>;
 }

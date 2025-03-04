@@ -13,11 +13,11 @@ export class Profile {
   @Column()
   bio: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   avatar: string;
 
   @Field(() => User)
   @OneToMany(() => User, (user) => user.profile)
-  user: User;
+  user: Promise<User>;
 }

@@ -6,6 +6,7 @@ import dbConfig from './config/db.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
       debug: true,
       playground: true,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

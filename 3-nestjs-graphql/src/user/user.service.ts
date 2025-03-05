@@ -3,6 +3,7 @@ import { Parent, ResolveField } from '@nestjs/graphql';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { EntityNotFoundError, Repository } from 'typeorm';
+import { CreateUserInput } from './dto/create-user-input';
 
 @Injectable()
 export class UserService {
@@ -20,5 +21,10 @@ export class UserService {
       throw new EntityNotFoundError(User, id);
     }
     return user;
+  }
+
+  async create(user: CreateUserInput) {
+    const newUser = this.UserRepo.create(user);
+    return await this.UserRepo.save(newUser);
   }
 }

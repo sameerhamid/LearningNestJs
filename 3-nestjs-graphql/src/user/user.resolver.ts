@@ -1,6 +1,7 @@
 import {
   Args,
   Int,
+  Mutation,
   Parent,
   Query,
   ResolveField,
@@ -8,6 +9,7 @@ import {
 } from '@nestjs/graphql';
 import { User } from 'src/entities/user.entity';
 import { UserService } from './user.service';
+import { CreateUserInput } from './dto/create-user-input';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -26,5 +28,10 @@ export class UserResolver {
   @ResolveField('profile')
   async profile(@Parent() user: User) {
     return await user.profile;
+  }
+
+  @Mutation(() => User)
+  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return this.userService.create(createUserInput);
   }
 }

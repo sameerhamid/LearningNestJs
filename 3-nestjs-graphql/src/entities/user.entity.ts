@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Profile } from './profile.entity';
 import { Post } from './post.entity';
+import { Role } from 'src/enums/role.enum';
 
 @ObjectType()
 @Entity()
@@ -28,6 +29,14 @@ export class User {
   @Field(() => String)
   @Column()
   email: string;
+
+  @Field(() => Role)
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.USER,
+  })
+  role: Role;
 
   @Field(() => Profile, { nullable: true })
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })

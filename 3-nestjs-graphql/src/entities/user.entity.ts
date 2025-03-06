@@ -29,12 +29,12 @@ export class User {
   @Column()
   email: string;
 
-  @Field(() => Profile)
+  @Field(() => Profile, { nullable: true })
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   @JoinColumn()
-  profile: Promise<Profile>;
+  profile?: Promise<Profile>;
 
   @Field(() => [Post])
   @OneToMany(() => Post, (post) => post.user)
-  posts: Promise<Post[]>;
+  posts: Promise<Post[]> = Promise.resolve([]);
 }

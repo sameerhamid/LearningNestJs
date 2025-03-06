@@ -32,5 +32,5 @@ export class Post {
   @Field(() => [Tag])
   @ManyToMany(() => Tag, (tag) => tag.posts, { cascade: true })
   @JoinTable()
-  tags: Promise<Tag[]>;
+  tags: Promise<Tag[]> = Promise.resolve([]);
 }

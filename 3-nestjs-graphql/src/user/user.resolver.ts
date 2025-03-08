@@ -7,6 +7,9 @@ import { UseGuards } from '@nestjs/common';
 import { GqlJwtGuard } from 'src/auth/guards/gql-jwt-guard/gql-jwt.guard';
 import { JwtUser } from 'src/auth/types/jwt-user';
 import { CurrentUser } from 'src/auth/decrators/current-user.decrator';
+import { Roles } from 'src/auth/decrators/roles.decrator';
+import { Role } from 'src/enums/role.enum';
+import { RolesGuard } from 'src/auth/roles/roles.guard';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -32,6 +35,8 @@ export class UserResolver {
   //   return this.userService.create(createUserInput);
   // }
 
+  @Roles(Role.ADMIN)
+  @UseGuards(RolesGuard)
   @UseGuards(GqlJwtGuard)
   @Mutation(() => User)
   updateUser(

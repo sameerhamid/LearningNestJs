@@ -5,7 +5,7 @@ import { User } from 'src/entities/user.entity';
 import { Role } from 'src/enums/role.enum';
 import { CreateUserInput } from 'src/user/dto/create-user.input';
 import { EntityNotFoundError, Repository } from 'typeorm';
-import { SignInInput } from './dto/signin.input';
+import { SignInInput } from './dto/signIn.input';
 
 @Injectable()
 export class AuthService {

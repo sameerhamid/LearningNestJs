@@ -31,10 +31,10 @@ export class UserResolver {
   //   return await user.profile;
   // }
 
-  @Mutation(() => User)
-  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return this.userService.create(createUserInput);
-  }
+  // @Mutation(() => User)
+  // createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+  //   return this.userService.create(createUserInput);
+  // }
 
   @Mutation(() => User)
   updateUser(

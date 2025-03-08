@@ -38,6 +38,9 @@ export class User {
   })
   role: Role;
 
+  @Column({ nullable: true })
+  password: string;
+
   @Field(() => Profile, { nullable: true })
   @OneToOne(() => Profile, (profile) => profile.user, { cascade: true })
   @JoinColumn()

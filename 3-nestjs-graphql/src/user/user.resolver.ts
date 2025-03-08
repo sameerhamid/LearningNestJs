@@ -6,6 +6,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlJwtGuard } from 'src/auth/guards/gql-jwt-guard/gql-jwt.guard';
 import { JwtUser } from 'src/auth/types/jwt-user';
+import { CurrentUser } from 'src/auth/decrators/current-user.decrator';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -34,13 +35,11 @@ export class UserResolver {
   @UseGuards(GqlJwtGuard)
   @Mutation(() => User)
   updateUser(
-    @Context() context: { req: { user: JwtUser } },
-
+    // must be provide GqlJwtGuard
+    @CurrentUser() user: JwtUser,
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
   ) {
-    const id = context.req.user.userId;
-
-    return this.userService.update(id, updateUserInput);
+    return this.userService.update(user.userId, updateUserInput);
   }
 
   @Mutation(() => Boolean)

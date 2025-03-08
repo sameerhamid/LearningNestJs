@@ -9,6 +9,7 @@ import { SignInInput } from './dto/signIn.input';
 import { AuthJwtPayload } from './types/auth-jwt-payload';
 import { JwtService } from '@nestjs/jwt';
 import { AuthPayload } from './entities/auth-payload';
+import { JwtUser } from './types/jwt-user';
 
 @Injectable()
 export class AuthService {
@@ -62,5 +63,15 @@ export class AuthService {
       userId: user.id,
       role: user.role,
     };
+  }
+
+  async validateJwtUser(userId: number) {
+    const user = await this.UserRepo.findOneByOrFail({ id: userId });
+    const jwtUser: JwtUser = {
+      userId: user.id,
+      role: user.role,
+    };
+
+    return jwtUser;
   }
 }
